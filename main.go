@@ -66,9 +66,14 @@ func main() {
 
 	bot.Handle("/text", func(m *tb.Message) {
 		output := uuid.NewV4().String()
-		message := strings.TrimSpace(m.Text)
+		message := m.Text
 		message = strings.Replace(message, "/text", "", 1)
 		message = strings.Replace(message, "@george_text_bot", "", 1)
+		message = strings.TrimSpace(message)
+
+		if len(message) == 0 {
+			return
+		}
 
 		if err := draw.Text(imagePath, fontPath, message, output) ; err != nil {
 			logger.Error("Error creating image", err)
