@@ -52,7 +52,7 @@ func main() {
 
 	bot.Handle("/text", func(m *tb.Message) {
 		output := uuid.NewV4().String()
-		message := strings.Replace(m.Text, "/text", "", 1)
+		message := strings.TrimSpace(strings.Replace(m.Text, "/text", "", 1))
 
 		if err := draw.Text(imagePath, fontPath, message, output) ; err != nil {
 			logger.Error("Error creating image", err)
