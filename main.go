@@ -75,12 +75,12 @@ func main() {
 			receiver = m.Sender
 		}
 
-		_, err := bot.Send(receiver, image)
+		sent, err := bot.Send(receiver, image)
 		if err != nil {
 			logger.Error("Error sending message", err)
 		}
 
-		logger.Infof("Send message back to %s", receiver.Recipient())
+		logger.Infof("Send message back to %s: #%v", receiver.Recipient(), sent.ID)
 	})
 
 	logger.Info("Starting bot")
