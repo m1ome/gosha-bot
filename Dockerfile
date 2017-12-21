@@ -4,6 +4,8 @@ ADD . /go/src/github.com/m1ome/gosha-bot
 
 RUN set -x \
     && cd /go/src/github.com/m1ome/gosha-bot/ \
+    && export VERSION=$(git rev-parse --verify HEAD) \
+    && export LDFLAGS="-w -s -X main.Version=${VERSION}" \
     && CGO_ENABLED=0 go build -v -ldflags "${LDFLAGS}" -o /go/bin/gosha-bot
 
 FROM scratch

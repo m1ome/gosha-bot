@@ -20,6 +20,11 @@ var (
 	fontPath string
 )
 
+
+var (
+	Version = "dev"
+)
+
 func init() {
 	// Initialize logger
 	zlog, err := zap.NewProduction()
@@ -49,6 +54,15 @@ func main() {
 	if err != nil {
 		logger.Fatalf("Error connecting bot", err)
 	}
+
+	bot.Handle("/version", func(m *tb.Message) {
+		if m.Private() {
+			_, err := bot.Send(m.Sender, fmt.Sprintf("Version: %s", Version))
+			if err != nil {
+				logger.Error("Error sending version", err)
+			}
+		}
+	})
 
 	bot.Handle("/text", func(m *tb.Message) {
 		output := uuid.NewV4().String()
