@@ -65,9 +65,14 @@ func main() {
 		defer os.Remove(output)
 
 		var receiver tb.Recipient
-		receiver = m.Sender
 		if m.FromGroup() {
+			logger.Info("Got request from group", m.Sender, message)
+
 			receiver = m.Chat
+		} else {
+			logger.Info("Got request from private", m.Sender, message)
+
+			receiver = m.Sender
 		}
 
 		_, err := bot.Send(receiver, image)
