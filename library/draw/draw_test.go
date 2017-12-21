@@ -22,6 +22,10 @@ func TestText(t *testing.T) {
 			"Тест русского языка с переносами и всякими ништяками",
 			"long_rus.png",
 		},
+		{
+			"Парни, а что принять в Лиссабоне от тоншоты?",
+			"lissbon.png",
+		},
 	}
 
 	// Running all cases

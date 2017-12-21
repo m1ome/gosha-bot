@@ -6,6 +6,7 @@ import (
 	"errors"
 
 	"github.com/fogleman/gg"
+	"unicode/utf8"
 )
 
 const (
@@ -44,21 +45,22 @@ func Text(img, font, text, output string) error{
 	var symbols int
 	var idx int
 
-	for _, word := range words{
-		if symbols + len(word) > StringSize {
+	for _, word := range words {
+		if symbols + utf8.RuneCountInString(word) > StringSize {
+
 			// Adding text
 			txt.DrawString(strings.Join(tmp, " "), 50, 50 + float64(StringHeight*idx))
 
 			// Making new array of words
-			tmp = []string{word}
+			tmp = make([]string, 0)
 
 			// Resting counters
 			symbols = 0
 			idx++
-		} else {
-			tmp = append(tmp, word)
-			symbols += len(word) + 1
 		}
+
+		tmp = append(tmp, word)
+		symbols += utf8.RuneCountInString(word) + 1
 	}
 	txt.DrawString(strings.Join(tmp, " "), 50, 50+float64(StringHeight*idx))
 
